@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<input type ="button" value="clickmee!!" onclick="clickme();">
+
+<div id="viz">
+    <canvas id="analyser" width="1024" height="500"></canvas>
+    <canvas id="wavedisplay" width="1024" height="500"></canvas>
+</div>
+
+</body>
+<script>
+
+    var WS;
+    var socketAudio;
+    var recording = true;
+    var boolrecord = true;
+    var context = new AudioContext();
+    var analyserContext = null;
+    //var scriptNode = null;
+    var scriptNode;
+    //var scriptNode = context.createScriptProcessor(bufferSize, 1, 1);
+    //var analyserNode =null;
+    source = context.createBufferSource();
+
+    if (!navigator.getUserMedia)
+        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
+                navigator.mozGetUserMedia || navigator.msGetUserMedia;
+    navigator.getUserMedia(
+            {
+                "audio": {
+                    "mandatory": {
+                        "googEchoCancellation": "false",
+                        "googAutoGainControl": "false",
+                        "googNoiseSuppression": "false",
+                        "googHighpassFilter": "false"
+                    },
+                    "optional": []
+                },
+            },
+            //initializeRecorder,
+            initializeRecorder,
+            function(e) {
+                alert('Error getting audio');
+                console.log(e);
+            });
+    //navigator.getUserMedia({audio: true}, initializeRecorder, function(e){});
+    //navigator.getUserMedia({audio: true}, gotStream, function(e){});
+
+    function initializeRecorder(stream) {
+        var audioContext = context;
+        inputPoint = audioContext.connect( audioContext.destination );
+
+        // Create an AudioNode from the stream.
+        realAudioInput = audioContext.createMediaStreamSource(stream);
+        audioInput = realAudioInput;
+        audioInput.connect(inputPoint);
+        var bufferSize = 2048;
+        //var bufferSize = 2048;
+        //audioInput = convertToMono( input );
+
+        analyserNode = audioContext.createAnalyser();
+        analyserNode.fftSize = bufferSize;
+        inputPoint.connect(analyserNode);
+        scriptNode = context.createScriptProcessor(bufferSize, 1, 1);
+        zeroGain = audioContext.createGain();
+        zeroGain.gain.value = 0.0;
+        inputPoint.connect( zeroGain );
+        zeroGain.connect( audioContext.destination);
+        scriptNode.onaudioprocess = audioprocess;
+        updateAnalysers();
+    }
+
+
+    // load in an audio track via XHR and decodeAudioData
+    function audioprocess(audioProcessingEvent) {
+        var inputBuffer = audioProcessingEvent.inputBuffer;
+        var outputBuffer = audioProcessingEvent.outputBuffer;
+        for (var channel = 0; channel < outputBuffer.numberOfChannels; channel++) {
+            var inputData = new Uint8Array(analyserNode.frequencyBinCount);
+            analyserNode.getByteFrequencyData(inputData);
+            var outputData = outputBuffer.getChannelData(channel);
+            var multiplier = analyserNode.frequencyBinCount;
+            for (var sample = 0; sample < inputBuffer.length; sample++) {
+                var muestraa = inputData[sample]/multiplier;
+                outputData[sample] = inputData[sample];
+            }
+            outputData;
+        }
+    }
+
+    function updateAnalysers() {
+        if (!analyserContext) {
+            var canvas = document.getElementById("analyser");
+            canvasWidth = canvas.width;
+            canvasHeight = canvas.height;
+            analyserContext = canvas.getContext('2d');
+        }
+
+        // analyzer draw code here
+        {
+            var SPACING = 3;
+            var BAR_WIDTH = 1;
+            var numBars = Math.round(canvasWidth / SPACING);
+            var freqByteData = new Uint8Array(analyserNode.frequencyBinCount);
+
+            analyserNode.getByteFrequencyData(freqByteData);
+
+            analyserContext.clearRect(0, 0, canvasWidth, canvasHeight);
+            analyserContext.fillStyle = '#F6D565';
+            analyserContext.lineCap = 'round';
+            var multiplier = analyserNode.frequencyBinCount / numBars;
+
+            // Draw rectangle for each frequency bin.
+            for (var i = 0; i < numBars; ++i) {
+                var magnitude = 0;
+                var offset = Math.floor( i * multiplier );
+                // gotta sum/average the block, or we miss narrow-bandwidth spikes
+                for (var j = 0; j< multiplier; j++)
+                    magnitude += freqByteData[offset + j];
+                magnitude = magnitude / multiplier;
+                var magnitude2 = freqByteData[i * multiplier];
+                analyserContext.fillStyle = "hsl( " + Math.round((i*360)/numBars) + ", 100%, 50%)";
+                analyserContext.fillRect(i * SPACING, canvasHeight, BAR_WIDTH, -magnitude);
+            }
+        }
+
+        rafID = window.requestAnimationFrame( updateAnalysers );
+    }
+/*
+    function getData() {
+        request = new XMLHttpRequest();
+        request.open('GET', 'viper.ogg', true);
+        request.responseType = 'arraybuffer';
+        request.onload = function() {
+            var audioData = request.response;
+
+            audioCtx.decodeAudioData(audioData, function(buffer) {
+                        myBuffer = buffer;
+                        source.buffer = myBuffer;
+                    }
+                    //,function(e){"Error with decoding audio data" + e.err}
+                    );
+        }
+        request.send();
+    }
+*/
+    // Give the node a function to process audio events
+
+
+    //getData();
+
+    // wire up play button
+     function clickme() {
+        //source.connect(scriptNode);
+        scriptNode.connect(context.destination);
+        source.start();
+    }
+
+    // When the buffer source stops playing, disconnect everything
+    source.onended = function() {
+        source.disconnect(scriptNode);
+        scriptNode.disconnect(audioCtx.destination);
+    }
+</script>
+</html>

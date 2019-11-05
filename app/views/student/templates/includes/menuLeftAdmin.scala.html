@@ -1,0 +1,18 @@
+@import controllers.student.routes
+<!-- //////////////////////////////////////////////////////////////////////////// -->
+<!-- START SIDEBAR -->
+<div class="sidebar clearfix">
+
+    <ul class="sidebar-panel nav">
+        <li class="sidetitle">Admin</li>
+        <li><a href="@controllers.student.routes.WebsiteController.index()" ><span class="icon color5"><i class="fa fa-home"></i></span>Principal</a></li>
+        <li><a href="@controllers.admin.routes.AdminController.courses()" ><span class="icon color5"><i class="fa fa-book"></i></span>Cursos</a></li>
+        <li><a href="@controllers.admin.routes.AdminController.chapters()" ><span class="icon color5"><i class="fa fa-bookmark"></i></span>Cap&iacute;tulos</a></li>
+        <li><a href="@controllers.admin.routes.AdminController.events()" ><span class="icon color5"><i class="fa fa-calendar-o"></i></span>Eventos</a></li>
+        <li><a href="@controllers.admin.routes.AdminController.banners()" ><span class="icon color5"><i class="fa fa-picture-o"></i></span>Banners</a></li>
+        <li><a href="@controllers.admin.routes.AdminController.videos()" ><span class="icon color5"><i class="fa fa-video-camera"></i></span>Videos</a></li>
+        <li><a href="@controllers.admin.routes.AdminController.users()" ><span class="icon color5"><i class="fa fa-check-circle"></i></span>Alumnos</a></li>
+
+    </ul>
+
+</div>

@@ -1,0 +1,79 @@
+@(editForm : Form[forms.EventForm])
+
+@import helper._
+@implicitField = @{FieldConstructor(views.html.student.templates.components.tmpl001.f) }
+
+@import controllers.student.routes
+@views.html.student.templates.baseAdmin(Messages("website.cliche.one")){
+
+<!-- Start Page Header -->
+<div class="page-header">
+
+    <h1 class="title">Eventos</h1>
+    <ol class="breadcrumb">
+        <li class="active">Edicion de eventos.</li>
+    </ol>
+
+    <a href="@controllers.admin.routes.AdminController.events()">CANCELAR</a>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active clearfix" id="c_academy">
+
+            <div class="pnl_top">
+                <div class="panel panel-default">
+                    <div class="panel-body ">
+
+                        @if(editForm.hasGlobalErrors) {
+                            <div class="alert alert-block alert-danger fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="icon-remove"></i>
+                                </button>
+                                <strong>Ups!</strong>
+                                @for(error <- editForm.globalErrors) {
+                                <p>@error.format(messages)</p>
+                                }
+                            </div>
+                        }
+
+                        @helper.form(action = controllers.admin.routes.AdminController.editEvent(), 'enctype -> "multipart/form-data", 'role -> "form") {
+                            <h4>ACTUALIZACION DE EVENTO</h4><br/>
+                            <input type="hidden" name="id" value='@editForm("id").value' >
+                            @helper.inputText(editForm("name"), 'class -> "form-control", 'placeholder -> "Nombre")
+                            @helper.textarea(editForm("description"), 'rows -> 5, 'cols -> 50, 'class -> "form-control", 'placeholder -> "Descripción")
+                            @helper.inputText(editForm("address"), 'class -> "form-control", 'placeholder -> "Dirección")
+
+                            @helper.inputText(editForm("startDate"), 'class -> "form-control", 'placeholder -> "Fecha de inicio", 'type -> "datetime-local")
+                            @helper.inputText(editForm("endDate"), 'class -> "form-control", 'placeholder -> "Fecha de fin", 'type -> "datetime-local")
+
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <button type="button" onclick="uploadImage()" class="btn btn-sm btnupload">
+                                        <i class="fa fa-upload"></i>Agregar Imagen
+                                    </button></br>
+                                    <label>Peso maximo : 1mb</label>
+                                </div>
+                            </div>
+
+
+                            @helper.inputFile(editForm("fileImage"), args ='id -> "fileImage", 'class -> "form-control btn-file", 'style -> "visibility: hidden", '_label -> "")
+
+
+                            <button class="btn btn-danger block-center text-center" type="submit">ACTUALIZAR</button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-widget">
+</div>
+}{
+<script>
+    function uploadImage(){
+        $( "#fileImage" ).click();
+    }
+</script>
+}

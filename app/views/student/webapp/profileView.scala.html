@@ -1,0 +1,50 @@
+@(userProfile : models.User)(implicit request: Http.Request, messages: play.i18n.Messages)
+
+@import helper._
+@implicitField = @{FieldConstructor(views.html.student.templates.components.tmpl001.f) }
+
+@views.html.student.templates.baseApp(Messages("website.cliche.one")){
+<section class="wrapper">
+
+    <div class="row">
+        <aside class="profile-nav col-lg-3">
+            <section class="panel">
+                <div class="user-heading round">
+                    <a href="#">
+                        <img src='@routes.Assets.versioned(userProfile.urlImage)' alt="" />
+                    </a>
+                    <h1>@(userProfile.firstName + " " +userProfile.lastName)</h1>
+                    <p>@userProfile.email</p>
+                </div>
+            </section>
+        </aside>
+        <aside class="profile-nav col-lg-9">
+            <section class="panel">
+                <div class="panel-body bio-graph-info">
+                    <div class="row">
+                       @if(userProfile.birthday!=null){
+                        <div class="bio-row">
+                            <p><span>Cumpleaños </span>@userProfile.birthday.format("dd/MM/YYYY")</p>
+                        </div>
+                       }
+                        <div class="bio-row">
+                            <p><span>Email </span>@userProfile.email</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Telefono </span>@userProfile.telephone</p>
+                        </div>
+                        <div class="bio-row">
+                            <p><span>Desde </span>@userProfile.createdDate.format("dd/MM/YYYY")</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </aside>
+    </div>
+    <!-- page end-->
+
+</section>
+}{
+
+
+}

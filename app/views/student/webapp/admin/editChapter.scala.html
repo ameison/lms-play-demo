@@ -1,0 +1,99 @@
+@(editForm : Form[forms.ChapterForm], lessons: List[models.Lesson])
+
+@import helper._
+@implicitField = @{FieldConstructor(views.html.student.templates.components.tmpl001.f) }
+
+@import controllers.student.routes
+@views.html.student.templates.baseAdmin(Messages("website.cliche.one")){
+
+<!-- Start Page Header -->
+<div class="page-header">
+
+    <h1 class="title">Capitulos</h1>
+    <ol class="breadcrumb">
+        <li class="active">Edicion de capitulos.</li>
+    </ol>
+
+    <a href="@controllers.admin.routes.AdminController.chapters()">CANCELAR</a>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active clearfix" id="c_academy">
+
+            <div class="pnl_top">
+                <div class="panel panel-default">
+                    <div class="panel-body ">
+
+                        @if(editForm.hasGlobalErrors) {
+                            <div class="alert alert-block alert-danger fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="icon-remove"></i>
+                                </button>
+                                <p class="error">
+                                    @for(error <- editForm.globalErrors) {
+                                    <p>@error.format(messages)</p>
+                                    }
+                                </p>
+                            </div>
+                        }
+
+                        @helper.form(action = controllers.admin.routes.AdminController.editChapter(), 'enctype -> "multipart/form-data", 'role -> "form") {
+                            <h4>EDICI&Oacute;N DE CAPITULOS</h4><br/>
+                            <input type="hidden" name="id" value='@editForm("id").value' >
+                            @helper.inputText(editForm("name"), 'class -> "form-control", 'placeholder -> "Nombre")
+                            @helper.input(field = editForm("idCourse"),args = 'size -> 40, '_label -> "Curso") { (id, name, value, args) =>
+                                <select name="@name" class="form-control">
+                                    @for(st <- Course.getCoursesbyAdmin()){
+                                        @if(st.id.toString() == editForm("idCourse").value.toString()){
+                                            <option value="@st.id" selected>@st.name</option>
+                                        }else{
+                                            <option value="@st.id">@st.name</option>
+                                        }
+                                    }
+                                </select>
+                            }
+
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <button type="button" onclick="uploadImage()" class="btn btn-sm btnupload">
+                                        <i class="fa fa-upload"></i>Agregar Imagen
+                                    </button></br>
+                                    <label>Peso maximo : 1mb</label>
+                                </div>
+                            </div>
+
+                            @helper.inputFile(editForm("fileImage"), args ='id -> "fileImage", 'class -> "form-control btn-file", 'style -> "visibility: hidden", '_label -> "")
+
+
+                            <button class="btn btn-danger block-center text-center" type="submit">ACTUALIZAR</button>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h2>Lecciones de este contenido</h2>
+                <ul>
+                    @for(lesson <- lessons){
+                        <li><a href='@controllers.admin.routes.AdminController.formEditLesson(lesson.id)'>@lesson.name</a></li>
+                    }
+                </ul>
+                <strong>ARREGLAR: editForm("id").value.toLong</strong>
+                <a href='@controllers.admin.routes.AdminController.formRegisterLesson(222222)'>Agregar leccion</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="container-widget">
+</div>
+}{
+<script>
+    function uploadImage(){
+        $( "#fileImage" ).click();
+    }
+</script>
+}

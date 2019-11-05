@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<input type ="button" value="clickmee!!" onclick="clickme();">
+
+<div id="viz">
+    <canvas id="analyser" width="1024" height="500"></canvas>
+    <canvas id="wavedisplay" width="1024" height="500"></canvas>
+</div>
+</body>
+<script>
+    var scriptNode;
+    var audioContext;
+    function gotStream(stream) {
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioContext = new AudioContext();
+
+
+        var mediaStreamSource = audioContext.createMediaStreamSource(stream);
+        var bufferSize = 2048;
+
+        scriptNode = audioContext.createScriptProcessor(bufferSize, 1, 1);
+        analyserNode = audioContext.createAnalyser();
+
+        mediaStreamSource.connect( audioContext.destination );
+        //scriptNode.onaudioprocess = audioprocess;
+    }
+/**/
+    function audioprocess(audioProcessingEvent) {
+        var inputBuffer = audioProcessingEvent.inputBuffer;
+        var outputBuffer = audioProcessingEvent.outputBuffer;
+        for (var channel = 0; channel < outputBuffer.numberOfChannels; channel++) {
+            var inputData = new Uint8Array(analyserNode.frequencyBinCount);
+            analyserNode.getByteFrequencyData(inputData);
+            for (var sample = 0; sample < inputBuffer.length; sample++) {
+                var muestraa = inputData[sample]/multiplier;
+                outputData[sample] = inputData[sample];
+            }
+            outputData;
+        }
+    }
+/**/
+
+    navigator.getUserMedia = navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
+            navigator.mozGetUserMedia || navigator.msGetUserMedia;
+    navigator.getUserMedia( {audio:true}, gotStream,function(e) {
+        alert('Error getting audio');
+        console.log(e);
+    } );
+
+    function clickme() {
+        //source.connect(scriptNode);
+        scriptNode.connect(context.destination);
+        source.start();
+    }
+    /*
+    // When the buffer source stops playing, disconnect everything
+    source.onended = function() {
+        source.disconnect(scriptNode);
+        scriptNode.disconnect(audioCtx.destination);
+    }
+    */
+</script>
+</html>

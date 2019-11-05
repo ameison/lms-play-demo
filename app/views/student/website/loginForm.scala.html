@@ -1,0 +1,87 @@
+@(loginForm: Form[forms.UserLoginForm])(implicit request: Http.Request, messages: play.i18n.Messages)
+
+@import helper._
+@implicitField = @{FieldConstructor(views.html.student.templates.components.tmpl001.f) }
+
+@import controllers.student.routes
+@views.html.student.templates.baseSite(messages("website.cliche.one")){
+
+<!-- Section: intro -->
+<section id="intro" class="intro">
+    <div class="intro-content">
+        <div class="container" style="margin-top:150px;margin-bottom: 150px">
+            <div class="row text-center heading">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4 col-lg-offset-4">
+                            <div class="panel panel-default">
+                                <strong>LOGIN</strong>
+                                <div class="panel-body">
+
+                                    @form(routes.WebsiteController.login()) {
+
+                                        @if(loginForm.hasGlobalErrors) {
+                                            <div class="alert alert-block alert-danger fade in">
+                                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                                    <i class="icon-remove"></i>
+                                                </button>
+                                                <strong>Ups!</strong>
+                                                @for(error <- loginForm.globalErrors) {
+                                                <p>@error.format(messages)</p>
+                                                }
+                                            </div>
+                                        }
+
+                                        @if(loginForm.hasErrors) {
+                                            Errors in form
+                                        }
+
+                                        @inputText(loginForm("email"), 'class -> "form-control", 'placeholder -> Messages("website.login.email"))
+                                        @inputPassword(loginForm("password"), 'class -> "form-control", 'placeholder -> Messages("website.login.password"))
+
+                                        <button class="btn btn-md btn-primary btn-block" style="background: #1D4570" type="submit">@Messages("website.login.ingresar").toUpperCase</button>
+
+                                        <div class="registration"><br/>
+                                            <a style="font-size: 12px" data-toggle="modal" href="#myModal">@Messages("website.login.olvideclave")</a> |
+                                            <a style="font-size: 12px" class="" href="/register"> @Messages("website.login.crearcuenta") </a>
+                                        </div>
+
+                                    }
+
+
+                                </div>
+                            </div>
+
+                            <!-- Modal -->
+                            <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title">Olvide la clave</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Crear cuenta</p>
+                                            <input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix">
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button data-dismiss="modal" class="btn btn-danger" type="button">Cancelar</button>
+                                            <button class="btn btn-primary" type="button" style="background: #1D4570;">Enviar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- modal -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+}{
+
+}

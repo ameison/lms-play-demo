@@ -1,0 +1,10 @@
+(1) Subir zip
+scp target/universal/vidglobal-1.0-SNAPSHOT.zip root@67.205.159.186:/home/vid_repository/snaps/
+
+(2) Descomprimir en destino
+unzip vidglobal-1.0-SNAPSHOT.zip
+
+(3) Reiniciar supervisor
+supervisorctl restart vid
+
+

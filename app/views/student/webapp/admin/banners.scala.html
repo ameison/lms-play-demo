@@ -1,0 +1,54 @@
+@(banners: List[models.Banner])
+
+@import helper._
+@implicitField = @{FieldConstructor(views.html.student.templates.components.tmpl001.f) }
+
+@import controllers.student.routes
+@views.html.student.templates.baseAdmin(Messages("website.cliche.one")){
+
+<!-- Start Page Header -->
+<div class="page-header">
+
+    <h1 class="title">Banners</h1>
+    <ol class="breadcrumb">
+        <li class="active">Aqui se muestran el total de banners.</li>
+    </ol>
+
+    <a href="@controllers.admin.routes.AdminController.formRegisterBanner()">Agregar Banner</a>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active clearfix" id="c_academy">
+            <table class="table">
+                <thead>
+                <tr>
+                    <td>Orden</td>
+                    <td>Nombre</td>
+                    <td>Descripcion</td>
+                    <td>Acciones</td>
+                </tr>
+                </thead>
+                <tbody>
+                    @for((banner, idx) <- banners.zipWithIndex){
+                        <tr class = "success" >
+                            <td align="center">@(idx+1)</td>
+                            <td>@banner.name.toUpperCase</td>
+                            <td>@banner.description</td>
+                            <td>
+                                <a href="@controllers.admin.routes.AdminController.formEditBanner(banner.id)" class="btn btn-primary btn-rounded btn-sm">Editar</a>
+                                <a href="@controllers.admin.routes.AdminController.deleteBanner(banner.id)" class="btn btn-danger btn-rounded btn-sm">Eliminar</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<div class="container-widget">
+</div>
+}{
+
+}

@@ -1,0 +1,54 @@
+@(courses: List[models.Course])
+
+@import helper._
+@implicitField = @{FieldConstructor(views.html.student.templates.components.tmpl001.f) }
+
+@import controllers.student.routes
+@views.html.student.templates.baseAdmin(Messages("website.cliche.one")){
+
+<!-- Start Page Header -->
+<div class="page-header">
+
+    <h1 class="title">Cursos</h1>
+    <ol class="breadcrumb">
+        <li class="active">Aqui se muestran el total de cursos.</li>
+    </ol>
+
+    <a href="@controllers.admin.routes.AdminController.formRegisterCourse()">Agregar Curso</a>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active clearfix" id="c_academy">
+            <table class="table">
+                <thead>
+                <tr>
+                    <td>Orden</td>
+                    <td>Curso</td>
+                    <td>N° Cap</td>
+                    <td>Acciones</td>
+                </tr>
+                </thead>
+                <tbody>
+                    @for((course, idx) <- courses.zipWithIndex){
+                        <tr class = "success" >
+                            <td align="center">@(idx+1)</td>
+                            <td>@course.name.toUpperCase</td>
+                            <td align="center">@course.chapters.size</td>
+                            <td>
+                                <a href="@controllers.admin.routes.AdminController.formEditCourse(course.code)" class="btn btn-warning btn-rounded btn-sm">Editar</a>
+                                <a href='@controllers.admin.routes.AdminController.deleteCourse(course.id)' class="btn btn-warning btn-rounded btn-sm">Eliminar</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<div class="container-widget">
+</div>
+}{
+
+}

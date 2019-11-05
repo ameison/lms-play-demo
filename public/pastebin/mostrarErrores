@@ -1,0 +1,10 @@
+
+@if(registerForm.hasErrors) {
+<h1>Please fix the following error first</h1>
+
+<ul>
+    @for(error <- registerForm.errors) {
+    <li>@error.toString</li>
+    }
+</ul>
+}

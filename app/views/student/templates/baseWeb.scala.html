@@ -1,0 +1,147 @@
+@(title: String)(content: Html)(scripts: Html)
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+        <meta name="description" content="Estudia con los mejores cursos online en nuestra plataforma educativa">
+        <meta name="author" content="Bittamina">
+        <title>@title</title>
+
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link href='@routes.Assets.versioned("website/css/main.css")' rel="stylesheet" type="text/css"/>
+        <link href='@routes.Assets.versioned("webapp/css/font-awesome.min.css")' rel="stylesheet" type="text/css"/>
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src='@routes.Assets.versioned("website/js/jquery-ui.min.js")' ></script>
+        <script src='@routes.Assets.versioned("website/js/bootstrap.min.js")' ></script>
+
+        <link rel="shortcut icon" href='@routes.Assets.versioned("logo_favicon.jpg")' />
+
+        <style>
+
+            .item_ico{
+                width: 50px;
+                height: 50px;
+            }
+
+            .item_ico:hover{
+                width: 60px;
+                height: 60px;
+            }
+        </style>
+
+    </head>
+
+    <body>
+
+        @views.html.student.templates.includes.headerLogin("transparent")
+
+        @content
+
+    <div class="container-fluid" style="background-color: #1D4570; color: #FFFFFF">
+
+        <div class="container" style="margin-top: 10px">
+            <div class="row" >
+                <div class="col-sm-12 col-md-12">
+                    <div class="panel panel-default"  style="background: #1D4570">
+                        <div class="panel-body">
+
+                            <img src='@routes.Assets.versioned("website/images/untrm/cn_1.jpg")' alt="">
+                            <img src='@routes.Assets.versioned("website/images/untrm/cn_2.jpg")' alt="">
+                            <img src='@routes.Assets.versioned("website/images/untrm/cn_3.jpg")' alt="">
+                            <img src='@routes.Assets.versioned("website/images/untrm/cn_4.jpg")' alt="">
+                            <img src='@routes.Assets.versioned("website/images/untrm/cn_5.jpg")' alt="">
+                            <img src='@routes.Assets.versioned("website/images/untrm/cn_6.jpg")' alt="">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="container" style="margin-top: 10px; margin-bottom: 10px">
+
+            <div class="row" >
+                <div class="col-sm-3 col-md-3">
+                    <ul class="list-unstyled" style="font-size: 20px">
+                        <li><strong>© 2016 Universidad Nacional Toribio Rodríguez de Mendoza de Amazonas </strong></li>
+                    </ul>
+                </div>
+                <div class="col-sm-6 col-md-6"  style="border-left: 2px solid #FFF">
+                    <ul class="list-unstyled" style="font-weight: bold; font-size: 20px">
+                        <li>Ciudad Universitaria: El Franco - Barrio de Higos Urco.</li>
+                        <li>Rectorado: Teléfono: 041-477694 / Telefax: 041-477694</li>
+                        <li>Ciudad Universitaria: Teléfonos: 041-477955 / 041-478006 / 041-478851 / 041-478821</li>
+                        <li>Chachapoyas - Amazonas - Perú</li>
+                    </ul>
+                </div>
+                <div class="col-sm-3 col-md-3">
+                    <ul class="list-unstyled" style="font-weight: bold; font-size: 20px">
+                        <li>E-mail de contacto:</li>
+                        <li>informes@@untrm.edu.pe</li>
+                        <li>soporte@@untrm.edu.pe</li>
+                        <li style="padding-top: 5px">
+                            <a href="https://www.facebook.com/untrm.a/" target="_blank"><img class="item_ico" src='@routes.Assets.versioned("website/images/untrm/face.png")' alt=""></a>
+                            <a href="https://twitter.com/untrm" target="_blank"><img class="item_ico" src='@routes.Assets.versioned("website/images/untrm/twitter.png")' alt=""></a>
+                            <a href="https://www.linkedin.com/in/untrm-untrm-a73450137?goback=%2Enpv_AAYAACFY*5vcBldkyfbz19qAuYYlXPaEGo9SUnz0_*1_*1_name_ZwFt_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_*1_mirror*5profile*5memberlist*5name_*1_*1&trk=eml_inv_status_profile_non_email" target="_blank">
+                                <img class="item_ico" src='@routes.Assets.versioned("website/images/untrm/linkedin.png")' alt=""></a>
+                            <a href="https://www.youtube.com/channel/UCV75Hd0BPoQQgQcjn3UQWWQ" target="_blank"><img class="item_ico" src='@routes.Assets.versioned("website/images/untrm/youtube.png")' alt=""></a>
+
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <script language="javascript">var STATIC_URL = "/static/";</script>
+
+    <script>
+    $('.dropdown-toggle').dropdown();
+    $('.demo').slick({
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 1000
+    });
+    </script>
+
+    </body>
+
+    <div id="fb-root"></div>
+
+    <script>(function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.3&appId=498665343578083";
+    fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+
+    <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+    <script src="https://apis.google.com/js/platform.js"></script>
+
+    <script src='@routes.Assets.versioned("website/js/jquery.cycle.all.js")' ></script>
+    <script src='@routes.Assets.versioned("website/js/jquery.easing.1.3.js")' ></script>
+
+
+    <script>
+    $('#m_quotes').cycle({fx: 'fade', speed: '1000', timeout: 8000, next: '#btn_next', prev: '#btn_prev'});
+    </script>
+
+
+</html>

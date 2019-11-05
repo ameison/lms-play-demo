@@ -1,0 +1,79 @@
+@(editForm : Form[forms.ContentAdminQuizForm], answers: List[models.ContentQuizAnswer])
+
+@import helper._
+@implicitField = @{FieldConstructor(views.html.student.templates.components.tmpl001.f) }
+
+@import controllers.student.routes
+@views.html.student.templates.baseAdmin(Messages("website.cliche.one")){
+
+<!-- Start Page Header -->
+<div class="page-header">
+
+    <h1 class="title">Contenido de preguntas</h1>
+    <ol class="breadcrumb">
+        <li class="active">Edicion de contenido de preguntas.</li>
+    </ol>
+
+    <strong>ARREGLAR: editForm("idLesson").value.toLong</strong>
+    <a href='@controllers.admin.routes.AdminController.formEditLesson(2222)'>CANCELAR</a>
+
+    <!-- Tab panes -->
+
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active clearfix" id="c_academy">
+
+            <div class="pnl_top">
+                <div class="panel panel-default">
+                    <div class="panel-body ">
+
+                        @if(editForm.hasGlobalErrors) {
+                            <div class="alert alert-block alert-danger fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="icon-remove"></i>
+                                </button>
+                                <strong>Ups!</strong>
+                                @for(error <- editForm.globalErrors) {
+                                    <p>@error.format(messages)</p>
+                                }
+                            </div>
+                        }
+
+                        @helper.form(action = controllers.admin.routes.AdminController.editContentQuiz()) {
+                            <input type="hidden" name="idContent" value='@editForm("idContent").value'/>
+                            <input type="hidden" name="id" value='@editForm("id").value'/>
+
+                            @helper.inputText(editForm("contentName"), 'class -> "form-control", 'placeholder -> "Nombre del contenido")
+                            @helper.inputText(editForm("orderContent"), 'class -> "form-control", 'placeholder -> "Posición del contenido")
+
+                            @helper.inputText(editForm("question"), 'class -> "form-control", 'placeholder -> "Pregunta del contenido")
+
+                            <button class="btn btn-danger block-center text-center" type="submit">ACTUALIZAR</button>
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h2>Respuestas de esta pregunta:</h2>
+                <ul>
+                    @for(answer <- answers){
+                        <li><a href='@controllers.admin.routes.AdminController.formEditContentAnswer(answer.id)'>@answer.answer</a></li>
+                    }
+                </ul>
+
+                <strong>ARREGLAR: editForm("id").value.toLong</strong>
+                <a href='@controllers.admin.routes.AdminController.formRegisterContentAnswer(2)'>Agregar respuesta</a><br>
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="container-widget">
+</div>
+}{
+}

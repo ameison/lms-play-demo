@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="viz">
+    <canvas id="analyser" width="1024" height="500"></canvas>
+    <canvas id="wavedisplay" width="1024" height="500"></canvas>
+</div>
+</body>
+<script>
+    var WS;
+    var socketAudio;
+    var recording = true;
+    var boolrecord = true;
+    var context = new AudioContext();
+    var analyserContext = null;
+
+    if (!navigator.getUserMedia)
+        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
+                navigator.mozGetUserMedia || navigator.msGetUserMedia;
+    navigator.getUserMedia(
+            {
+                "audio": {
+                    "mandatory": {
+                        "googEchoCancellation": "false",
+                        "googAutoGainControl": "false",
+                        "googNoiseSuppression": "false",
+                        "googHighpassFilter": "false"
+                    },
+                    "optional": []
+                },
+            },
+            //initializeRecorder,
+            gotStream,
+                    function(e) {
+                alert('Error getting audio');
+                console.log(e);
+            });
+    //navigator.getUserMedia({audio: true}, initializeRecorder, function(e){});
+    //navigator.getUserMedia({audio: true}, gotStream, function(e){});
+
+    function initializeRecorder(strean){
+        audio_context = context;
+        sampleRate = audio_context.sampleRate;
+        var audioInput = audio_context.createMediaStreamSource(strean);
+        var recording = true;
+        console.log("Created media stream.");
+
+        //var bufferSize = 256;
+        //var bufferSize = 16384;
+        var bufferSize = 2048;
+        volume = context.createGain();
+        //var recorder = audio_context.createScriptProcessor(bufferSize, 1, 1);
+        var recorder = audio_context.createScriptProcessor(bufferSize, 2, 1);
+        recorder.onaudioprocess = recorderProcess;
+        audioInput.connect(recorder);
+        recorder.connect(audio_context.destination);
+        //volume.connect(recorder);
+    }
+
+    function gotStream(stream) {
+        var audioContext = context;
+        inputPoint = audioContext.createGain();
+
+        // Create an AudioNode from the stream.
+        realAudioInput = audioContext.createMediaStreamSource(stream);
+        audioInput = realAudioInput;
+        audioInput.connect(inputPoint);
+
+        //audioInput = convertToMono( input );
+
+        analyserNode = audioContext.createAnalyser();
+        analyserNode.fftSize = 2048;
+        inputPoint.connect(analyserNode);
+        //analyserNode.onaudioprocess = recorderProcess;
+
+        //audioRecorder = new Recorder( inputPoint );
+
+        zeroGain = audioContext.createGain();
+        zeroGain.gain.value = 0.0;
+        inputPoint.connect( zeroGain );
+        zeroGain.connect( audioContext.destination );
+        recorderProcess();
+        updateAnalysers();
+    }
+
+    WS = window['MozWebSocket'] ? window['MozWebSocket'] : WebSocket;
+    socketAudio = new WS('ws://127.0.0.1:9000/stream/reproduccion');
+
+    //var ws = new WebSocket('ws://127.0.0.1:5000/websocket');
+
+    socketAudio.onopen = function(evt) {
+        console.log('Connected to websocket.');
+
+    }
+
+    function recorderProcessGot() {
+        if (recording){
+            //var left = e.inputBuffer.getChannelData(0);
+            //var right = e.inputBuffer.getChannelData(1);
+            var sender = convertFloat32ToInt16(left);
+            var sender2 = convertFloat32ToInt16(right);
+            //if(boolrecord) {
+            playsound(sender);
+            playsound(sender2);
+            //}
+        }
+    }
+    function recorderProcess(e) {
+        if (recording){
+            //var left = e.inputBuffer.getChannelData(0);
+            //var right = e.inputBuffer.getChannelData(1);
+            //var sender = convertFloat32ToInt16(left);
+            //var sender2 = convertFloat32ToInt16(right);
+            //if(boolrecord) {
+                //playsound(sender);
+                //playsound(sender2);
+            //}
+        }
+    }
+
+
+    function updateAnalysers(time) {
+        if (!analyserContext) {
+            var canvas = document.getElementById("analyser");
+            canvasWidth = canvas.width;
+            canvasHeight = canvas.height;
+            analyserContext = canvas.getContext('2d');
+        }
+
+        // analyzer draw code here
+        {
+            var SPACING = 3;
+            var BAR_WIDTH = 1;
+            var numBars = Math.round(canvasWidth / SPACING);
+            var freqByteData = new Uint8Array(analyserNode.frequencyBinCount);
+
+            analyserNode.getByteFrequencyData(freqByteData);
+
+            analyserContext.clearRect(0, 0, canvasWidth, canvasHeight);
+            analyserContext.fillStyle = '#F6D565';
+            analyserContext.lineCap = 'round';
+            var multiplier = analyserNode.frequencyBinCount / numBars;
+
+            // Draw rectangle for each frequency bin.
+            for (var i = 0; i < numBars; ++i) {
+                var magnitude = 0;
+                var offset = Math.floor( i * multiplier );
+                // gotta sum/average the block, or we miss narrow-bandwidth spikes
+                for (var j = 0; j< multiplier; j++)
+                    magnitude += freqByteData[offset + j];
+                magnitude = magnitude / multiplier;
+                var magnitude2 = freqByteData[i * multiplier];
+                analyserContext.fillStyle = "hsl( " + Math.round((i*360)/numBars) + ", 100%, 50%)";
+                analyserContext.fillRect(i * SPACING, canvasHeight, BAR_WIDTH, -magnitude);
+            }
+        }
+
+        rafID = window.requestAnimationFrame( updateAnalysers );
+    }
+
+    function convertFloat32ToInt16(buffer) {
+        l = buffer.length;
+        buf = new Int16Array(l);
+        while (l--) {
+            buf[l] = Math.min(1, buffer[l])*0x7FFF;
+        }
+        return buf.buffer;
+    }
+
+    function playsound(raw) {
+        boolrecord = false;
+        var buffer = raw, src = context.createBufferSource();
+        audioBuffer = context.createBuffer(1, buffer.byteLength, context.sampleRate);
+        audioBuffer.getChannelData(0).set(buffer);
+        src.buffer = audioBuffer;
+        src.volume=1;
+        src.connect(context.destination);
+        //src.start(0);
+        src.start(0);
+    }
+</script>
+</html>

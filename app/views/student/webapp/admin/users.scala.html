@@ -1,0 +1,51 @@
+@(users: List[models.User])
+
+@import helper._
+@implicitField = @{FieldConstructor(views.html.student.templates.components.tmpl001.f) }
+
+@import controllers.student.routes
+@views.html.student.templates.baseAdmin(Messages("website.cliche.one")){
+
+<!-- Start Page Header -->
+<div class="page-header">
+
+    <h1 class="title">Usuarios</h1>
+    <ol class="breadcrumb">
+        <li class="active">Aqui se muestran el total de usuarios registrados.</li>
+    </ol>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active clearfix" id="c_academy">
+            <table class="table">
+                <thead>
+                <tr>
+                    <td>Orden</td>
+                    <td>Nombres</td>
+                    <td>Email</td>
+                    <td>Acciones</td>
+                </tr>
+                </thead>
+                <tbody>
+                    @for((user, idx) <- users.zipWithIndex){
+                        <tr class = "success" >
+                            <td align="center">@(idx+1)</td>
+                            <td>@user.firstName.toUpperCase @user.lastName</td>
+                            <td>@user.email</td>
+                            <td>
+                                <a href='@controllers.admin.routes.AdminController.courseByUser(user.id)' class="btn btn-primary btn-rounded btn-sm">Ver cursos</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<div class="container-widget">
+</div>
+}{
+
+}

@@ -1,0 +1,133 @@
+
+
+@(color: String)
+<style>
+.activex a{
+color: black !important;
+font-weight: 400
+}
+</style>
+<div class="header-place">
+    <div class="header" style="height: 85px !important">
+        <div class="bs-example">
+            <nav id="navbar-example" class="navbar navbar-default navbar-static-top"
+                 style="background-color: #fff; border: none; margin: 0px">
+                <div class="container-fluid" style="width: 100%; max-width: 1170px !important">
+                    <div class="navbar-header">
+                        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse"
+                                data-target=".bs-example-js-navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" style="padding-top:9px" href="/">
+                            <img src='@routes.Assets.versioned("website/images/untrm/logo_untrm.jpg")' alt="" style="margin-top: -8px; height: 60px">
+                        </a>
+                    </div>
+                    <div class="collapse navbar-collapse bs-example-js-navbar-collapse" style="margin-top: 12px;">
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li id="fat-menu"
+                                class='dropdown @{if (request.path == controllers.student.routes.WebsiteController.contact().toString()) "activex"}'>
+                                <a style="color:#000; font-weight: bold" id="my_login" class="btn_index"
+                                   href='#'
+                                   role="button" aria-expanded="false">968349389</a>
+                            </li>
+                        </ul>
+
+                        @if(!session.get("email")){
+                            <ul class="nav navbar-nav navbar-right">
+                                <li id="fat-menu"  class='dropdown'>
+                                    <div><a class="btn btn-sm btn-primary" style="color:#ffffff;padding:10px 15px;margin-top: 3px;font-size:15px;font-weight:normal;  margin-left: 12px;  background: #1D4570;"
+                                            href='@controllers.student.routes.WebsiteController.loginForm()'
+                                            role="button" aria-expanded="false">Aula virtual</a></div>
+                                </li>
+                            </ul>
+
+                            <ul class="nav navbar-nav navbar-right">
+                                <li id="fat-menu"
+                                    class='dropdown @{if (request.path == controllers.student.routes.WebsiteController.register().toString()) "activex"}'>
+                                    <a style="color:#000; font-weight: bold" id="my_register" class="btn_index"
+                                       href='@controllers.student.routes.WebsiteController.register()'
+                                       role="button" aria-expanded="false">Reg&iacute;strate</a>
+                                </li>
+                            </ul>
+
+                        }else{
+                            <ul class="nav navbar-nav navbar-right">
+                                @if(session.get("userRol").toString == "ADMINISTRADOR"){
+                                    <li class='dropdown'><a style="color:#000; font-weight: bold" href='@controllers.admin.routes.AdminController.courses()'>Administrar</a></li>
+                                } else {
+                                    <li class='dropdown'><a style="color:#000; font-weight: bold" href='@controllers.student.routes.AcademyController.getMyCourses()'>Mi formaci&oacute;n</a></li>
+                                }
+
+                                <li class="dropdown">
+                                    <a data-toggle="dropdown" class="dropdown-toggle btn_index" href="#" style="padding: 12px">
+                                        @if(session.get("urlPicUser")){
+                                            <img alt="userimage" src='@session.get("urlPicUser")'>
+                                        }else{
+                                            <img alt="userimage" src='@routes.Assets.versioned("images/default_user.jpg")'>
+                                        }
+                                        <span class="username"> @session.get("username")</span>
+                                        <b class="caret"></b>
+                                    </a>
+                                    <ul class="dropdown-menu extended logout">
+                                        <div class="log-arrow-up"></div>
+                                        <!--<li><a href="#"><i class=" icon-suitcase"></i>Perfil</a></li>-->
+                                        <!--<li><a href="#"><i class="icon-cog"></i> Configuraci&oacute;n</a></li>-->
+                                        <li><a href="/logout"><i class="icon-key"></i>Salir</a></li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        }
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li id="fat-menu"
+                                class='dropdown @{if (request.path == controllers.student.routes.WebsiteController.contact().toString()) "activex"}'>
+                                <a style="color:#000; font-weight: bold" id="my_login" class="btn_index"
+                                   href='@controllers.student.routes.WebsiteController.contact()'
+                                   role="button" aria-expanded="false">Cont&aacute;ctanos</a>
+                            </li>
+                        </ul>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li id="fat-menu"
+                                class='dropdown @{if (request.path == controllers.student.routes.WebsiteController.videos().toString()) "activex"}'>
+                                <a style="color:#000; font-weight: bold" id="my_login" class="btn_index"
+                                   href='@controllers.student.routes.WebsiteController.videos()'
+                                   role="button" aria-expanded="false">Videos</a>
+                            </li>
+                        </ul>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li id="fat-menu"
+                                class='dropdown @{if (request.path == controllers.student.routes.WebsiteController.news().toString()) "activex"}'>
+                                <a style="color:#000; font-weight: bold" class="btn_index" href='@controllers.student.routes.WebsiteController.news()' role="button" aria-expanded="false">Actualidad</a>
+                            </li>
+                        </ul>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li id="fat-menu"  class='dropdown @{if (request.path == controllers.student.routes.WebsiteController.courses().toString()) "activex"}'>
+                                <a style="color:#000; font-weight: bold" class="btn_index"
+                                   href='@controllers.student.routes.WebsiteController.courses()' role="button"
+                                   aria-expanded="false">Formaci&oacute;n</a>
+                            </li>
+                        </ul>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li id="fat-menu"  class='dropdown @{if (request.path == controllers.student.routes.WebsiteController.us().toString()) "activex"}'>
+                                <a style="color:#000; font-weight: bold" class="btn_index"
+                                   href='@controllers.student.routes.WebsiteController.us()' role="button"
+                                   aria-expanded="false">Quienes somos</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,17 @@
+// Find all tasks
+List<Task> tasks = Task.find.all();
+
+// Find a task by ID
+Task anyTask = Task.find.byId(34L);
+
+// Delete a task by ID
+Task.find.ref(34L).delete();
+
+// More complex task query
+List<Task> tasks = find.where()
+    .ilike("name", "%coco%")
+    .orderBy("dueDate asc")
+    .findPagingList(25)
+    .setFetchAhead(false)
+    .getPage(1)
+    .getList();

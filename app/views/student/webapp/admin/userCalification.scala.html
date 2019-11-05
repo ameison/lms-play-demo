@@ -1,0 +1,43 @@
+@(userCourses : List[models.UserCourse])
+
+@import helper._
+@implicitField = @{FieldConstructor(views.html.student.templates.components.tmpl001.f) }
+
+@views.html.student.templates.baseAdmin(Messages("website.cliche.one")){
+
+<!-- Start Page Header -->
+<style>
+    .correct{
+        color: #3CD5AF;
+    }
+
+    .incorrect{
+        color: #FF4539;
+    }
+
+</style>
+
+<div class="page-header">
+    <h1 class="title">Mis calificaciones</h1>
+</div>
+
+<div class="container-widget" >
+    @*********************
+    @for((userCourse, idx) <- userCourses.zipWithIndex) {
+        <h5>@userCourse.course.name.toUpperCase</h5>
+        @defining(UserProgress.getUserQuestionByCourse(userCourse.course.id)) { questions =>
+            @if(questions.size() > 0){
+                <h5>Preguntas respondidas :</h5>
+                @for((up, idxUp) <- questions.zipWithIndex) {
+                    <p class="@if(up.state == 1) {'incorrect'} else {'correct'}">@(idxUp + 1) @ContentQuiz.getQuizByContentId(up.content.id).question</p>
+                }
+                <h4 style="padding-bottom: 20px">Nota actual del curso : @UserProgress.getUserQuestionCorrectsByCourse(userCourse.course.id)</h4>
+            }else{
+                <h5 style="padding-bottom: 20px">Este usuario no ha desarrolado ni un cuestionario en este curso.</h5>
+            }
+        }
+    }
+    *************@
+</div>
+}{
+}

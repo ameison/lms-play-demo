@@ -1,0 +1,64 @@
+@(registerForm : Form[forms.ContentAdminQuizAnswerForm], idContentQuiz : Long, idContent : Long)
+
+@import helper._
+@implicitField = @{FieldConstructor(views.html.student.templates.components.tmpl001.f) }
+
+@import controllers.student.routes
+@views.html.student.templates.baseAdmin(Messages("website.cliche.one")){
+
+<!-- Start Page Header -->
+<div class="page-header">
+
+    <h1 class="title">Registro de respuestas</h1>
+    <ol class="breadcrumb">
+        <li class="active">Registro de respuestas.</li>
+    </ol>
+
+    <a href="@controllers.admin.routes.AdminController.formEditContent(idContent)">CANCELAR</a>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active clearfix" id="c_academy">
+            <div class="pnl_top">
+                <div class="panel panel-default">
+                    <div class="panel-body ">
+
+                        @if(registerForm.hasGlobalErrors) {
+                            <div class="alert alert-block alert-danger fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="icon-remove"></i>
+                                </button>
+                                <strong>Ups!</strong>
+                                @for(error <- registerForm.globalErrors) {
+                                <p>@error.format(messages)</p>
+                                }
+                            </div>
+                        }
+
+                        @helper.form(action = controllers.admin.routes.AdminController.registerContentQuizAnswer()) {
+                            <h4>REGISTRO DE RESPUESTAS</h4><br/>
+
+                            <input type="hidden" name="idContentQuiz" value='@idContentQuiz' >
+                            @helper.inputText(registerForm("answer"), 'class -> "form-control", 'placeholder -> "Respuesta")
+                            @helper.inputText(registerForm("orderAnswer"), 'class -> "form-control", 'placeholder -> "Posición de la respuesta")
+
+                            @helper.input(field = registerForm("isCorrectAnswer"), '_label -> "") { (id, name, value, args) =>
+                                <div class="checkbox">
+                                    <input type="checkbox" name='@name' id="isCorrectAnswer" />
+                                    <label for="isCorrectAnswer">Es la respuesta correcta</label>
+                                </div>
+                            }
+
+                            <button class="btn btn-danger block-center text-center" type="submit">REGISTRAR</button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-widget">
+</div>
+}{
+}

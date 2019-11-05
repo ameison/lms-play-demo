@@ -1,0 +1,286 @@
+/*
+ * Author: Carlos Alvarez
+ * URL: http://alvarez.is
+ *
+ * Project Name: SPOT - Free Bootstrap 3 Theme
+ * Version: 1.0
+ * URL: http://blacktie.co
+ */
+/* FONTS */
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700,900);
+@import url(http://fonts.googleapis.com/css?family=Raleway:400,300,700,900);
+
+/* OVERALL ASPECT */
+
+body {
+    background-color: #f2f2f2;
+    font-family: "Lato";
+    font-weight: 300;
+    font-size: 16px;
+    color: #282828;
+    -webkit-font-smoothing: antialiased;
+    -webkit-overflow-scrolling: touch;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.main-section {
+    min-height: 600px;
+    display: block;
+    background: #434343 url("../images/kodelima_background.png") repeat-y center top;
+    /*background: url("../img/bg.jpg") no-repeat center top;*/
+}
+
+.main-but {
+    width: 100%;
+    margin: 26px 0 0;
+    display: block;
+    height: 48px;
+}
+
+.butt1, .butt2 {
+    height: 48px;
+    float: left;
+}
+
+.butt4, .butt3 {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    width: 280px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.butt5 {
+    width: 160px;
+    display: block;
+}
+
+.butt1 a {
+    border-radius: 3px;
+    width: 159px;
+    display: block;
+    height: 48px;
+    text-align: center;
+    line-height: 47px;
+    float: left;
+    border: 1px solid #ffffff;
+    opacity: 1;
+    color: #ffffff;
+    background-color: transparent;
+    transition: all .5s;
+}
+
+.butt2 a {
+    margin: 0 0 0 20px;
+    border-radius: 3px;
+    width: 159px;
+    display: block;
+    height: 48px;
+    text-align: center;
+    line-height: 47px;
+    float: left;
+    border: 1px solid #ffffff;
+    opacity: 1;
+    color: #ffffff;
+    background-color: transparent;
+    transition: all .5s;
+}
+
+.butt3 a {
+    border-radius: 3px;
+    width: 280px;
+    display: block;
+    height: 48px;
+    text-align: center;
+    line-height: 47px;
+    float: left;
+    border: 1px solid #ffffff;
+    opacity: 1;
+    color: #ffffff;
+    background-color: transparent;
+    transition: all .5s;
+}
+
+.butt4 a {
+    border-radius: 3px;
+    width: 280px;
+    display: block;
+    height: 48px;
+    text-align: center;
+    line-height: 47px;
+    opacity: 1;
+    color: #ffffff;
+    background-color: #C96157;
+    border: 1px solid #ac2925;
+    transition: all .5s;
+}
+
+.butt5 a {
+    border-radius: 3px;
+    width: 160px;
+    display: block;
+    height: 20px;
+    text-align: center;
+    line-height: 19px;
+    opacity: 1;
+    color: #ffffff;
+    background-color: #385866;
+    transition: all .5s;
+}
+
+.butt1 a:hover, .butt2 a:hover {
+    background-color: #ffffff;
+    color: #555555;
+}
+
+.butt3 a:hover {
+    background-color: #ffffff;
+    color: #555555;
+}
+
+.butt4 a:hover {
+    background-color: #c9302c;
+    color: #fff;
+}
+
+.butt5 a:hover {
+    background-color: #2c4855;
+    color: #fff;
+}
+
+.main-txt {
+    margin: 180px 0 0;
+}
+
+.main-img {
+    position: relative;
+    margin: 180px 0 0;
+    padding-bottom: 30px;
+}
+
+.wow_platcar {
+    height: auto;
+    width: 100%;
+    float: left;
+    text-align: center;
+    display: block;
+    background-color: #2B7195;
+    margin: 10px 0 0;
+    padding: 15px;
+}
+
+.blanco {
+    color: #fff;
+}
+
+.bul_azul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.bul_azul li {
+    padding-left: 1em;
+    text-indent: -.7em;
+}
+
+.bul_azul li:before {
+    content: "• ";
+    color: #C96157;
+}
+
+.header {
+    height: 70px;
+    display: block;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+    padding: 10px 0 0;
+    background-color: #ffffff;
+}
+
+.color_azul {
+    color: #2B7195;
+}
+
+.footer-header {
+    padding: 15px 0 5px 0;
+    color: #fff;
+    font-weight: bold;
+}
+
+.tit_fh li a{
+    color: #fff;
+}
+
+.footer{
+    background-color: #2B7195;
+    padding-bottom: 20px;
+}
+
+.fondo_negro{
+    background: #434343 url("../images/kodelima_background.png") repeat-y center top;
+}
+.title_h1{
+    margin-top: 80px;
+    color: white;
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: 3px;
+}
+.title_h2{
+    color: white;
+    font-size: 26px;
+}
+.title_h3{
+    color: white;
+    font-size: 18px;
+}
+
+.li-white {
+    padding: 15px 0 5px 0;
+    height: 30px;
+    color: #FFFFFF;
+
+}
+
+.separador {
+
+    height: 40px;
+    width: 100%;
+}
+.separador1 {
+
+    height: 20px;
+    width: 50%;
+}
+.pad_lef {
+    padding-left: 25px;
+}
+.t_monto1{
+    padding-top: 20px;
+    padding-bottom: 5px;
+    display: block;
+    color: rgba(255, 30, 33, 0.98);
+}
+.butt1 {
+    height: 12px;
+    float: left;
+    padding-left:25px;
+}
+
+.butt2{
+    height: 12px;
+    float: left;
+}
+
+.equis{
+    color: #ff1e21;
+    font-size: 11px;
+}

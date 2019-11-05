@@ -1,0 +1,22 @@
+.canvas-game {
+    border: 1px solid #000000;
+}
+.editor-game {
+    min-height: 400px;
+    font-size: 20px;
+    width: 100%;
+    border: 1px solid #ebebeb;
+}
+
+.div_cont{
+    width: 100%;
+    height: 80px;
+    display: block;
+    color: #fff;
+    text-align : justify;
+    padding: 10px;
+    margin-bottom: 15px;
+
+}
+
+

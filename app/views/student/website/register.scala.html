@@ -1,0 +1,65 @@
+@import helper._
+@implicitField = @{FieldConstructor(views.html.student.templates.components.tmpl001.f) }
+ 
+@views.html.student.templates.baseWeb(Messages("website.cliche.one")){
+<style>
+    .img_registered{
+        width: 120px;
+        text-align: center;
+        margin: 0 auto;
+        display: block;
+        padding-bottom: 20px;
+    }
+    .cont_center{
+        padding-top: 90px;
+        text-align: center;
+    }
+</style>
+
+<div class="container">
+
+<div class="row">
+<div class="col-lg-offset-3 col-lg-6 ">
+    <div class="cont_center">
+
+        <div class="col-lg-6">
+            <p>
+                <a href="/register/Student"><img src='@routes.Assets.versioned("images/class.png")' class="img_registered"></a>
+                <strong>Estudiante</strong><br/><br/>
+                <span>Empieza con el curso gratuito de Introducci&oacute;n al mundo de la programaci&oacute;n</span>
+            </p>
+            <div class="btn-group btn-group-justified">
+                <a class="btn btn-danger" href="@controllers.student.routes.WebsiteController.register()">Deseo empezar ahora</a>
+            </div>
+        </div>
+            <!--
+        <div class="col-lg-6">
+            <p>
+                <a href="/register/teacher"><img src='@routes.Assets.versioned("images/individual.png")' class="img_registered"/></a>
+                <strong>Docente</strong><br/><br/>
+                <span>Ens&eacute;ñales a tus alumnos el camino a seguir para convertirse en desarrollador.</span>
+            <div class="btn-group btn-group-justified">
+                <a class="btn btn-success" href="/register/teacher">Deseo facilitar el curso</a>
+            </div>
+            </p>
+        </div>
+    -->
+    </div>
+</div>
+</div>
+</div>
+}{
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#codigo").hide();
+        $("#idRol").change(function(){
+            var $rol = $("#idRol option:selected").val();
+            if($rol != 1 && $rol !=0){
+                $("#codigo").show();
+            }else{
+                $("#codigo").hide();
+            }
+        });
+    });
+</script>
+}

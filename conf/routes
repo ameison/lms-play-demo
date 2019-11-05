@@ -1,0 +1,87 @@
+# Routes
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+
+# -------------------------------------------------------------
+# -------------------------------------------------------------
+
++ noJwtFilter
+POST     /rest/login/                     rest.v1.security.SecurityController.login(request: Request)
+
+
+
+#GET     /                           controllers.HomeController.index
+->     /rest/v1/auth                    r.auth.Routes
+
+
+GET         /                        controllers.SecuredController.index(request: Request)
+GET         /login                   controllers.SecuredController.loginForm(request: Request)
+POST        /login                                             controllers.SecuredController.login(request: Request)
+GET         /logout                                            controllers.SecuredController.logout(request: Request)
+
+##############################
+# Administrador de cursos ####
+##############################
+GET     /json/map                    controllers.SecuredController.jsonMap()
+GET     /json/obj                    controllers.SecuredController.jsonObject()
+GET     /json/catch                  controllers.SecuredController.jsonCatch(request: Request)
+
+GET         /admin/courses                                     controllers.admin.AdminController.courses()
+GET         /admin/courses/new                                 controllers.admin.AdminController.formRegisterCourse()
+GET         /admin/course/:code                                controllers.admin.AdminController.formEditCourse(code: String)
+POST        /register/course                                   controllers.admin.AdminController.registerCourse()
+POST        /update/course                                     controllers.admin.AdminController.editCourse()
+GET         /delete/course/:id                                 controllers.admin.AdminController.deleteCourse(id: Long)
+
+GET         /admin/chapters                                    controllers.admin.AdminController.chapters()
+GET         /admin/chapters/new                                controllers.admin.AdminController.formRegisterChapter()
+GET         /admin/chapter/:id                                 controllers.admin.AdminController.formEditChapter(id: Long)
+POST        /register/chapter                                  controllers.admin.AdminController.registerChapter()
+POST        /update/chapter                                    controllers.admin.AdminController.editChapter()
+
+GET         /delete/chapter/:id                                controllers.admin.AdminController.deleteChapter(id: Long)
+
+GET         /admin/chapter/:idChapter/lessons/new/             controllers.admin.AdminController.formRegisterLesson(idChapter: Long)
+POST        /register/lesson                                   controllers.admin.AdminController.registerLesson()
+GET         /admin/lesson/:id                                  controllers.admin.AdminController.formEditLesson(id: Long)
+POST        /update/lesson                                     controllers.admin.AdminController.editLesson()
+
+GET         /admin/events                                      controllers.admin.AdminController.events()
+GET         /admin/events/new                                  controllers.admin.AdminController.formRegisterEvent()
+POST        /admin/events                                      controllers.admin.AdminController.registerEvent()
+GET         /admin/event/:id                                   controllers.admin.AdminController.formEditEvent(id: Long)
+POST        /update/event                                      controllers.admin.AdminController.editEvent()
+GET         /delete/event/:id                                  controllers.admin.AdminController.deleteEvent(id: Long)
+
+GET         /admin/banners                                     controllers.admin.AdminController.banners()
+GET         /admin/banners/new                                 controllers.admin.AdminController.formRegisterBanner()
+POST        /admin/banners                                     controllers.admin.AdminController.registerBanner()
+GET         /admin/banner/:id                                  controllers.admin.AdminController.formEditBanner(id: Long)
+POST        /update/banner                                     controllers.admin.AdminController.editBanner()
+GET         /delete/banner/:id                                 controllers.admin.AdminController.deleteBanner(id: Long)
+
+GET         /admin/videos                                      controllers.admin.AdminController.videos()
+GET         /admin/videos/new                                  controllers.admin.AdminController.formRegisterVideo()
+POST        /admin/videos                                      controllers.admin.AdminController.registerVideo()
+GET         /admin/video/:id                                   controllers.admin.AdminController.formEditVideo(id: Long)
+POST        /update/video                                      controllers.admin.AdminController.editVideo()
+GET         /delete/video/:id                                  controllers.admin.AdminController.deleteVideo(id: Long)
+
+GET         /admin/content/new/type/:type/lesson/:id           controllers.admin.AdminController.formRegisterContent(type: Integer, id: Long)
+POST        /admin/content/videos                              controllers.admin.AdminController.registerContentVideo()
+POST        /admin/content/downloads                           controllers.admin.AdminController.registerContentDownload()
+POST        /admin/content/quiz                                controllers.admin.AdminController.registerContentQuiz()
+GET         /admin/content/:id                                 controllers.admin.AdminController.formEditContent(id: Long)
+POST        /update/content/video                              controllers.admin.AdminController.editContentVideo()
+POST        /update/content/download                           controllers.admin.AdminController.editContentDownload()
+POST        /update/content/quiz                               controllers.admin.AdminController.editContentQuiz()
+
+GET         /admin/content/quiz/:id/answer/new                 controllers.admin.AdminController.formRegisterContentAnswer(id: Long)
+POST        /admin/content/quiz/answer                         controllers.admin.AdminController.registerContentQuizAnswer()
+
+GET         /admin/content/quiz/answer/:id                     controllers.admin.AdminController.formEditContentAnswer(id: Long)
+POST        /update/content/quiz/answer                        controllers.admin.AdminController.editContentQuizAnswer()
+
+
+GET         /admin/users                                       controllers.admin.AdminController.users()
+GET         /admin/users/:id/courses                           controllers.admin.AdminController.courseByUser(id: Long)

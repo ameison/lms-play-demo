@@ -1,0 +1,74 @@
+<!-- Start Page Loading -->
+
+<div class="loading"><img src='@routes.Assets.versioned("webapp/img/loading.gif")' alt="loading-img"></div>
+<!-- End Page Loading -->
+<!-- //////////////////////////////////////////////////////////////////////////// -->
+<!-- START TOP -->
+<div id="top" class="clearfix">
+
+    <!-- Start App Logo -->
+    <div class="applogo">
+        <a href='@controllers.student.routes.ApplicationController.dashboard()' class="logo">
+            EPGUNTRM
+        </a>
+    </div>
+    <!-- End App Logo -->
+
+    <!-- Start Sidebar Show Hide Button -->
+    <a href="#" class="sidebar-open-button"><i class="fa fa-bars"></i></a>
+    <a href="#" class="sidebar-open-button-mobile"><i class="fa fa-bars"></i></a>
+    <!-- End Sidebar Show Hide Button -->
+
+    <!-- End Searchbox -->
+    <!-- Start Top Menu -->
+    <ul class="topmenu padding-l-20">
+        <li class='@{if (request.path == controllers.student.routes.LibraryController.getCoursesOpened().toString()) "active"}'>
+            <a class="txt-white" href='@controllers.student.routes.LibraryController.getCoursesOpened()'>Cursoteca</a>
+        </li>
+        <li class="dropdown">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle">Cantera <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href='@controllers.student.routes.CanteraController.getCanteraExercises("easy")'>Ejercicios B&aacute;sicos</a></li>
+                <li><a href='@controllers.student.routes.CanteraController.getCanteraExercises("medium")'>Ejercicios Intermedios</a></li>
+                <li><a href='@controllers.student.routes.CanteraController.getCanteraExercises("hard")'>Ejercicios Avanzados</a></li>
+            </ul>
+        </li>
+        <li class='@{if (request.path == controllers.student.routes.LibraryController.getCoursesOpened().toString()) "active"}'>
+        </li>
+    </ul>
+    <!-- End Top Menu -->
+
+    <!-- Start Sidepanel Show-Hide Button -->
+    <a href="#sidepanel" class="sidepanel-open-button"><i class="fa fa-outdent"></i></a>
+    <!-- End Sidepanel Show-Hide Button -->
+
+    <!-- Start Top Right -->
+    <ul class="top-right">
+
+        <li class="dropdown link">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle hdbutton">Acciones<span class="caret"></span></a>
+            <ul class="dropdown-menu dropdown-menu-list">
+                <li><a href='@controllers.student.routes.CanteraController.formNewExercise()' ><i class="fa falist fa-paper-plane-o"></i>Subir nuevo ejercicio</a></li>
+                <li><a href="#"><i class="fa falist fa-font"></i>Crear torneo</a></li>
+            </ul>
+        </li>
+
+        <li class="link">
+            <a href="#" class="notifications">6</a>
+        </li>
+
+        <li class="dropdown link">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle profilebox">
+                <b>@session.get("username")</b><span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-list dropdown-menu-right">
+                <li><a href='@controllers.student.routes.UserController.getProfile(session.get(User.USER_COD))'><i class="fa falist fa-file-o"></i>Ver perfil</a></li>
+                <li><a href='@controllers.student.routes.WebsiteController.logout()'><i class="fa falist fa-power-off"></i>Cerrar Sesi&oacute;n</a></li>
+            </ul>
+        </li>
+
+    </ul>
+    <!-- End Top Right -->
+
+</div>
+<!-- END TOP -->

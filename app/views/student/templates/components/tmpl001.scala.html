@@ -1,0 +1,5 @@
+@(elements: helper.FieldElements)
+<div class="form-group @if(elements.hasErrors) {has-error}">
+    @elements.input
+    <span class="login-input-error" data-toggle="popover" data-placement="left" >@elements.errors.mkString(", ")</span>
+</div>

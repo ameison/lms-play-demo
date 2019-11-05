@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+</body>
+<script>
+    //var playButton = document.querySelector('button');
+
+    var audioCtx = new AudioContext();
+    source = audioCtx.createBufferSource();
+
+    var scriptNode = audioCtx.createScriptProcessor(4096, 1, 1);
+
+    scriptNode.onaudioprocess = function(audioProcessingEvent) {
+        var inputBuffer = audioProcessingEvent.inputBuffer;
+        var outputBuffer = audioProcessingEvent.outputBuffer;
+
+            var outputData = outputBuffer.getChannelData(0);
+
+            for (var sample = 0; sample < inputBuffer.length; sample++) {
+                outputData[sample] = inputData[sample];
+            }
+    }
+
+
+    source.connect(scriptNode);
+    scriptNode.connect(audioCtx.destination);
+    source.start();
+
+/*
+    source.onended = function() {
+        source.disconnect(scriptNode);
+        scriptNode.disconnect(audioCtx.destination);
+    }
+    */
+</script>
+</html>

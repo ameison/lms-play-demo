@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<input type ="button" value="clickmee!!" onclick="clickme();">
+</body>
+<script>
+    var audioCtx = new AudioContext();
+    var scriptNode;
+    source = audioCtx.createBufferSource();
+
+    if (!navigator.getUserMedia)
+        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+
+    navigator.getUserMedia({audio:true},initializeRecorder, function(e) {alert('Error getting audio');console.log(e);});
+
+    function initializeRecorder(stream) {
+            inputPoint = audioCtx.destination;
+            realAudioInput = audioCtx.createMediaStreamSource(stream);
+            var audioInput = realAudioInput;
+            var bufferSize = 2048;
+
+            analyserNode = audioCtx.createAnalyser();
+            analyserNode.fftSize = bufferSize;
+
+            scriptNode = audioCtx.createScriptProcessor(bufferSize, 1, 1);
+            scriptNode.onaudioprocess = getProcesor;
+            source.onended = endedSource;
+            source.connect(scriptNode);
+
+            audioInput.connect(scriptNode);
+    }
+
+    function getProcesor(audioProcessingEvent) {
+            var inputBuffer = audioProcessingEvent.inputBuffer;
+            var outputBuffer = audioProcessingEvent.outputBuffer;
+
+            for (var channel = 0; channel < outputBuffer.numberOfChannels; channel++) {
+                var inputData = inputBuffer.getChannelData(channel);
+                var outputData = outputBuffer.getChannelData(channel);
+
+                for (var sample = 0; sample < inputBuffer.length; sample++) {
+                    outputData[sample] = inputData[sample];
+                }
+            }
+    }
+
+    function clickme() {
+        source.connect(scriptNode);
+        scriptNode.connect(audioCtx.destination);
+        source.start();
+    }
+
+    function endedSource() {
+        source.disconnect(scriptNode);
+        scriptNode.disconnect(audioCtx.destination);
+    }
+</script>
+</html>

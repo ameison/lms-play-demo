@@ -1,0 +1,30 @@
+
+<aside>
+    <div id="sidebar" class="nav-collapse ">
+
+
+            <ul class="sidebar-menu">
+
+                <li>
+                    @session.get("username")
+                </li>
+
+                <hr class="hr-menu"/>
+
+                <li class="sub-menu">
+                    <a href="/dashboard" ><i class="icon-building" ></i>&nbsp;Mi escuela</a>
+                    <a href="/my-courses" ><i class="icon-book" ></i>&nbsp;Mis cursos</a>
+                    <a href="/my-resources" ><i class="icon-suitcase"></i>&nbsp;Mis materiales</a>
+                    <a href="/my-questions" ><i class="icon-th-list"></i>&nbsp;Mis consultas</a>
+                </li>
+
+                <hr class="hr-menu"/>
+                <li class="sub-menu">
+                    <a href="/my-badges" ><i class="icon-reorder"></i>&nbsp;Mis medallas</a>
+                    <a href="/my-credit" ><i class="icon-ticket"></i>&nbsp;Mi crédito</a>
+                </li>
+
+            </ul>
+
+    </div>
+</aside>

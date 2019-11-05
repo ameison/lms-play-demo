@@ -1,0 +1,88 @@
+@(editForm : Form[forms.ContentDownloadForm])
+
+@import helper._
+@implicitField = @{FieldConstructor(views.html.student.templates.components.tmpl001.f) }
+
+@import controllers.student.routes
+@views.html.student.templates.baseAdmin(Messages("website.cliche.one")){
+
+<!-- Start Page Header -->
+<div class="page-header">
+
+    <h1 class="title">Contenido de descarga</h1>
+    <ol class="breadcrumb">
+        <li class="active">Edicion de contenido de descarga.</li>
+    </ol>
+    <strong>ARREGLAR: editForm("idLesson").value.toLong</strong>
+    <a href='@controllers.admin.routes.AdminController.formEditLesson(3)'>CANCELAR</a>
+
+    <!-- Tab panes -->
+
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active clearfix" id="c_academy">
+
+            <div class="pnl_top">
+                <div class="panel panel-default">
+                    <div class="panel-body ">
+
+                        @if(editForm.hasGlobalErrors) {
+                            <div class="alert alert-block alert-danger fade in">
+                                <button data-dismiss="alert" class="close close-sm" type="button">
+                                    <i class="icon-remove"></i>
+                                </button>
+
+                                <strong>Ups!</strong>
+                                <p class="error">
+                                    @for(error <- editForm.globalErrors) {
+                                <p>@error.format(messages)</p>
+                                }
+                                </p>
+
+                            </div>
+                        }
+
+                        @helper.form(action = controllers.admin.routes.AdminController.editContentDownload(), 'enctype -> "multipart/form-data", 'role -> "form") {
+                            <input type="hidden" name="idContent" value='@editForm("idContent").value'/>
+                            <input type="hidden" name="id" value='@editForm("id").value'/>
+
+                            @helper.inputText(editForm("contentName"), 'class -> "form-control", 'placeholder -> "Nombre del contenido")
+                            @helper.inputText(editForm("orderContent"), 'class -> "form-control", 'placeholder -> "Posición del contenido")
+
+                            @helper.inputText(editForm("title"), 'class -> "form-control", 'placeholder -> "Título del video")
+                            @helper.textarea(editForm("description"), 'class -> "form-control", 'placeholder -> "Descripción del video")
+
+                            <div class="form-group ">
+                                <div class="col-sm-12">
+                                    <button type="button" onclick="uploadImage()" class="btn btn-sm btnupload">
+                                        <i class="fa fa-upload"></i>Seleccionar archivo
+                                    </button></br>
+                                    <label>Peso maximo : 10mb</label>
+                                </div>
+                            </div>
+
+                            <!--<input type="file" name="fileDownload" id="fileDownload">-->
+
+                            @helper.inputFile(editForm("fileDownload"), args ='id -> "fileDownload", 'class -> "form-control btn-file", 'style -> "visibility: hidden", '_label -> "")
+
+                            <button class="btn btn-danger block-center text-center" type="submit">ACTUALIZAR</button>
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="container-widget">
+</div>
+}{
+<script>
+    function uploadImage(){
+        $( "#fileDownload" ).click();
+    }
+</script>
+}

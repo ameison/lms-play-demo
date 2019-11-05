@@ -1,0 +1,72 @@
+@import helper._
+@implicitField = @{FieldConstructor(views.html.student.templates.components.tmpl001.f) }
+@import controllers.student.routes
+
+
+@views.html.student.templates.baseApp(Messages("website.cliche.one")){
+<!-- Start Page Header -->
+<div class="page-header">
+    <h1 class="title">Campeonatos</h1>
+</div>
+
+<script language="javascript" type="text/javascript">
+
+    $(function() {
+        var uriWsReloj = '';
+        var uriWsChat = '';
+
+        var WS = window['MozWebSocket'] ? MozWebSocket : WebSocket;
+
+        var websocket = new WS(uriWsReloj);
+        var wsChat = new WS(uriWsChat);
+
+        websocket.onmessage = function (event) {
+            $("#ping").html("Last ping: " + event.data);
+        };
+
+
+
+        wsChat.onmessage = function (event) {
+            $("#mychat").html(event.data);
+        };
+
+        $("#enviarMensaje").click(function () {
+            wsChat.send($("#my_msg").val());
+        });
+    })
+
+</script>
+
+<div class="container-widget">
+
+    <!-- Start Third Row -->
+    <div class="row">
+        <!-- Start General Stats -->
+        <div class="col-md-12 col-lg-12">
+            <div class="panel panel-widget">
+                <div id="ping"></div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-widget" >
+
+                <form>
+
+                <input type="text" id="my_msg" placeholder="Escribe un mensaje"/>
+                <input type="button" value="Enviar" id="enviarMensaje" />
+                <p>
+                   <div id="mychat" ></div>
+                </p>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+}{
+
+}

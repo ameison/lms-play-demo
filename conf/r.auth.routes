@@ -1,0 +1,6 @@
+
+#GET    /                     rest.v1.security.PostController.list(request:Request)
+#POST   /                     rest.v1.security.PostController.create(request:Request)
+
+#GET    /:id                  rest.v1.security.PostController.show(request:Request,id)
+#PUT    /:id                  rest.v1.security.PostController.update(request:Request, id)
